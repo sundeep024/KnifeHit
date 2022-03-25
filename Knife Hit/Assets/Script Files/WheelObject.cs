@@ -17,6 +17,7 @@ public class WheelObject : MonoBehaviour
     private WheelJoint2D _wheelJoint2D;
     private JointMotor2D _jointMotor2D;
 
+
     private void Awake()
     {
         _wheelJoint2D = GetComponent<WheelJoint2D>();
@@ -32,14 +33,20 @@ public class WheelObject : MonoBehaviour
             int _countRotation = Random.Range(0, _rotate.Length);
             yield return new WaitForFixedUpdate();
             _jointMotor2D.motorSpeed = _rotate[_countRotation].speed;
-            _jointMotor2D.maxMotorTorque = 10;
+            _jointMotor2D.maxMotorTorque = 10000;
             _wheelJoint2D.motor = _jointMotor2D;
 
             yield return new WaitForSecondsRealtime(_rotate[_countRotation].duration);
             _countRotation++;
             _countRotation = _countRotation < _rotate.Length ? _countRotation : 0;
-
         }
-
     }
+
+/*
+    public void StopRotation()
+    {
+        _jointMotor2D.motorSpeed = _rotate[0].speed;
+        _jointMotor2D.maxMotorTorque = 0;
+        _wheelJoint2D.motor = _jointMotor2D;
+    }*/
 }
